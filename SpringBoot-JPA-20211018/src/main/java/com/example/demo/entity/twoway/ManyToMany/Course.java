@@ -1,4 +1,4 @@
-package com.example.demo.entity.oneway_OneToMany;
+package com.example.demo.entity.twoway.ManyToMany;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -10,24 +10,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "infects")
-public class Infect {
-	
+@Table(name = "courses")
+public class Course {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
+	@Column(nullable = false, length = 50)
 	private String name;
 	
-	//單向一對多
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name = "infect_name")
-	private Set<Vaccine> vaccines = new LinkedHashSet<>();
+	@JoinTable(
+			name = "course_student",
+			joinColumns  = @JoinColumn(name = "course_id", referencedColumnName = "id" ),
+			inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id")
+		  )
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	private Set<Student> students = new LinkedHashSet<>();
 
 	public Long getId() {
 		return id;
@@ -45,17 +49,13 @@ public class Infect {
 		this.name = name;
 	}
 
-	public Set<Vaccine> getVaccines() {
-		return vaccines;
+	public Set<Student> getStudents() {
+		return students;
 	}
 
-	public void setVaccines(Set<Vaccine> vaccines) {
-		this.vaccines = vaccines;
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 	
 	
-	
-	
-	
-
 }

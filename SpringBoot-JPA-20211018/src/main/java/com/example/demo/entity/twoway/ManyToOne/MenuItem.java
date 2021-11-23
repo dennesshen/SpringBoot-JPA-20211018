@@ -1,33 +1,34 @@
-package com.example.demo.entity.oneway_OneToMany;
+package com.example.demo.entity.twoway.ManyToOne;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "infects")
-public class Infect {
+@Table(name = "menu_items")
+public class MenuItem {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
+	@Column(length = 50, nullable = true)
 	private String name;
 	
-	//單向一對多
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name = "infect_name")
-	private Set<Vaccine> vaccines = new LinkedHashSet<>();
+	@Column
+	private Integer price; 
+	
+	//雙向多對一
+	@ManyToOne
+	@JoinColumn(name = "group_id" )
+	private MenuGroup menuGroups;
 
 	public Long getId() {
 		return id;
@@ -45,12 +46,20 @@ public class Infect {
 		this.name = name;
 	}
 
-	public Set<Vaccine> getVaccines() {
-		return vaccines;
+	public Integer getPrice() {
+		return price;
 	}
 
-	public void setVaccines(Set<Vaccine> vaccines) {
-		this.vaccines = vaccines;
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public MenuGroup getMenuGroups() {
+		return menuGroups;
+	}
+
+	public void setMenuGroups(MenuGroup menuGroups) {
+		this.menuGroups = menuGroups;
 	}
 	
 	

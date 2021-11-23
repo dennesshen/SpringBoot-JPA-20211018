@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.entity.oneway_manyToOne.Customer;
 import com.example.demo.entity.oneway_manyToOne.Order;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.OrderRepository;
